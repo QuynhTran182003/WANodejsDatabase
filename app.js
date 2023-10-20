@@ -3,7 +3,6 @@ const mysql = require('mysql');
 
 const path = require('path');
 
-
 const dotenv = require('dotenv');
 dotenv.config({ path: './.env'});
 
@@ -13,7 +12,7 @@ const db = mysql.createConnection({
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE,
-    port: 8889
+    port: process.env.DATABASE_PORT
 });
 
 // __dirname the actual file where u are at the moment
