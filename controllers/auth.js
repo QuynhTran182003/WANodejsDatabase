@@ -2,10 +2,10 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const mysql = require('mysql');
+const mysql2 = require('mysql2');
 
 
-const db = mysql.createConnection({
+const db = mysql2.createConnection({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
