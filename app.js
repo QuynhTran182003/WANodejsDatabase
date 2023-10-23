@@ -26,13 +26,13 @@ app.use(express.json());
 
 app.set('view engine', 'hbs');
 
-db.connect((error)=>{
-    if(error){
-        console.log(error);
-    } else{
-        console.log("MySQL connected");
-    }
-})
+// db.connect((error)=>{
+//     if(error){
+//         console.log(error);
+//     } else{
+//         console.log("MySQL connected");
+//     }
+// })
 
 // defines routes
 app.use('/', require('./routes/pages'));
