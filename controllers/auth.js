@@ -27,10 +27,10 @@ exports.signUp = (req, res) =>
             return res.render('signup', {message: 'Passwords dont match'});
         }
 
-        let hashedPassword = await bcrypt.hash(password,8);
-        console.log(hashedPassword);    
+        // let hashedPassword = await bcrypt.hash(password,8);
+        // console.log(hashedPassword);    
 
-        db.query('INSERT INTO users SET ?', {name: username, email: email, password: hashedPassword}, (error, result) =>{
+        db.query('INSERT INTO users SET ?', {name: username, email: email, password: password}, (error, result) =>{
             if (error){
                 console.log(error);
             } else{
@@ -49,6 +49,15 @@ exports.signUp = (req, res) =>
 
 exports.signIn = (req, res) => {
     const {username, password} = req.body;
-    console.log(username, password);
-    res.render('index');
+    db.query('SELECT password FROM users WHERE password = ? and name = ?', [password, username], (error, result) =>{
+        if (error){
+            console.log(error);
+        } else{
+            if (result.length > 0){
+                return res.render('index');
+            }
+        }
+    })
+    // console.log(username, password);
+    // res.render('index');
 }
