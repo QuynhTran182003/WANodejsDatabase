@@ -25,9 +25,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 app.set('view engine', 'hbs');
-// app.get('/', (req,res) =>{
-//     res.render('signin');
-// })
+
 
 db.connect((error)=>{
     if(error){
@@ -38,9 +36,9 @@ db.connect((error)=>{
 })
 
 // defines routes
-app.use('/', require('.\\routes\\pages'));
-app.use('/auth', require('.\\routes\\auth'));
+app.use('/', require('./routes/pages'));
+app.use('/auth', require('./routes/auth'));
 
-app.listen(3002, () =>{
-    console.log("Server is running on port: 3002")
+app.listen(3001, () =>{
+    console.log("Server is running on port: 3001")
 })

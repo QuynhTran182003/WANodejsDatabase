@@ -19,26 +19,26 @@
         <div class="form-box text-white w-50 rounded p-4" style="background-color: rgb(0,0,0,0.5);">
             <div class="form-value d-flex flex-column justify-content-center align-items-center">
                 <div>
-                    <img src="..\media\logo.png" alt="" width="80" height="80">
+                    {{!-- <img src="..\media\logo.png" alt="" width="80" height="80"> --}}
                     <div class="d-flex">
                         <h2 class=" text-center"> 
-                            <a href="../routes/pages.js/signup">Sign up</a>
+                            <a href="/signup">Sign up</a>
                             </h2>
                         <h2><a href="#">Sign in</a></h2>
                     </div>
                                         
                 </div>
                 
-                <form action="../routes/auth/signIn" method="post">
+                <form action="/auth/signin" method="post">
                     
                     <div class="inputbox my-3 border-bottom border-2">
                         <input type="text" name="username" class=" w-75 bg-transparent h5 border-0" style="outline:none;" placeholder="Username"required>
-                        <img src="..\media\profile.png" alt="">
+                        {{!-- <img src="..\media\profile.png" alt=""> --}}
                     </div>
                     
                     <div class="inputbox my-3 border-bottom border-2">
                         <input id="password" type="password" name="password" class="w-75 bg-transparent h5 border-0" style="outline: none;" placeholder="Password"required>
-                        <img src="..\media\lock.png" alt="">
+                        {{!-- <img src="..\media\lock.png" alt=""> --}}
                     </div>
                    
                     <!-- <div class="forget my-4 ">
