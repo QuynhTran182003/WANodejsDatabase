@@ -8,12 +8,14 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './.env'});
 
 const app = express();
+
 app.use(session({
     secret: 'secret',
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
   }));
+
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,

@@ -1,15 +1,16 @@
 
-// const jwt = require('jsonwebtoken');
-// const bcrypt = require('bcryptjs');
-
 const mysql = require('mysql');
+// const express = require('express');
 const session = require('express-session');
-app.use(session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
-  }));
+// const app = express();
+
+// app.use(session({
+//     secret: 'secret',
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: false }
+//   }));
+
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
@@ -55,6 +56,7 @@ exports.signin = (req, res) => {
             console.log(error);
         } else{
             if (result.length > 0){
+                req.session.username = username;
                 return res.render('index', {username: username});
             }
         }
