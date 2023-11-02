@@ -1,15 +1,15 @@
 
 const mysql = require('mysql');
-// const express = require('express');
-// const session = require('express-session');
-// const app = express();
+const express = require('express');
+const session = require('express-session');
+const app = express();
 
-// app.use(session({
-//     secret: 'secret',
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: false }
-//   }));
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}));
 
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
@@ -19,7 +19,7 @@ const db = mysql.createConnection({
     port: process.env.DATABASE_PORT
 });
 
-exports.signUp = (req, res) => 
+exports.signup = (req, res) => 
 {
     const {username, email, password, repeatPassword} = req.body
     db.query('SELECT email FROM user WHERE email = ?', [email], async (error, result) => {
@@ -61,6 +61,4 @@ exports.signin = (req, res) => {
             }
         }
     })
-    // console.log(username, password);
-    // res.render('index');
 }

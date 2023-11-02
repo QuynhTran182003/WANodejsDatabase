@@ -2,7 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 
 const path = require('path');
-// const session = require('express-session');
+const session = require('express-session');
 
 const dotenv = require('dotenv');
 dotenv.config({ path: './.env'});
@@ -28,12 +28,12 @@ app.use(express.json());
 
 app.set('view engine', 'hbs');
 
-// app.use(session({
-//     secret: 'secret',
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: false }
-//   }));
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+  }));
 db.connect((error)=>{
     if(error){
         console.log(error);
