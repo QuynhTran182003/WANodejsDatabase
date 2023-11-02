@@ -1,8 +1,9 @@
 
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
+// const jwt = require('jsonwebtoken');
+// const bcrypt = require('bcryptjs');
 
 const mysql = require('mysql');
+const session = require('express-session');
 
 
 const db = mysql.createConnection({
@@ -13,10 +14,17 @@ const db = mysql.createConnection({
     port: process.env.DATABASE_PORT
 });
 
-exports.signUp = (req, res) => 
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+  }));
+  
+exports.signup = (req, res) => 
 {
     const {username, email, password, repeatPassword} = req.body
-    db.query('SELECT email FROM users WHERE email = ?', [email], async (error, result) => {
+    db.query('SELECT email FROM user WHERE email = ?', [email], async (error, result) => {
         if (error){
             console.log(error);
         }
@@ -26,11 +34,8 @@ exports.signUp = (req, res) =>
         } else if(password !== repeatPassword){
             return res.render('signup', {message: 'Passwords dont match'});
         }
-
-        // let hashedPassword = await bcrypt.hash(password,8);
-        // console.log(hashedPassword);    
-
-        db.query('INSERT INTO users SET ?', {name: username, email: email, password: password}, (error, result) =>{
+        
+        db.query('INSERT INTO user SET ?', {name: username, email: email, password: password}, (error, result) =>{
             if (error){
                 console.log(error);
             } else{
@@ -41,20 +46,17 @@ exports.signUp = (req, res) =>
         })
     })
 
-    
-    
-    // console.log(req.body);
-    // res.send("Form submitted");
 }
 
-exports.signIn = (req, res) => {
+exports.signin = (req, res) => {
     const {username, password} = req.body;
-    db.query('SELECT password FROM users WHERE password = ? and name = ?', [password, username], (error, result) =>{
+    db.query('SELECT password FROM user WHERE password = ? and name = ?', [password, username], (error, result) =>{
         if (error){
             console.log(error);
         } else{
             if (result.length > 0){
-                return res.render('index');
+                req.session.username = username;
+                return res.render('index', {username: {username}});
             }
         }
     })
