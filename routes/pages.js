@@ -1,14 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const router = express.Router();
-
-app.use(session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
-  }));
-router.get('/', (req, res) =>{
+router.get(("/"), (req, res) =>{
     // res.send("<h1>Homepage</h1>")
     res.render('signin');
 })

@@ -4,8 +4,12 @@
 
 const mysql = require('mysql');
 const session = require('express-session');
-
-
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+  }));
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
@@ -14,14 +18,7 @@ const db = mysql.createConnection({
     port: process.env.DATABASE_PORT
 });
 
-app.use(session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
-  }));
-  
-exports.signup = (req, res) => 
+exports.signUp = (req, res) => 
 {
     const {username, email, password, repeatPassword} = req.body
     db.query('SELECT email FROM user WHERE email = ?', [email], async (error, result) => {
@@ -34,8 +31,11 @@ exports.signup = (req, res) =>
         } else if(password !== repeatPassword){
             return res.render('signup', {message: 'Passwords dont match'});
         }
-        
-        db.query('INSERT INTO user SET ?', {name: username, email: email, password: password}, (error, result) =>{
+
+        // let hashedPassword = await bcrypt.hash(password,8);
+        // console.log(hashedPassword);    
+
+        db.query('INSERT INTO users SET ?', {name: username, email: email, password: password}, (error, result) =>{
             if (error){
                 console.log(error);
             } else{
@@ -55,8 +55,7 @@ exports.signin = (req, res) => {
             console.log(error);
         } else{
             if (result.length > 0){
-                req.session.username = username;
-                return res.render('index', {username: {username}});
+                return res.render('index', {username: username});
             }
         }
     })
